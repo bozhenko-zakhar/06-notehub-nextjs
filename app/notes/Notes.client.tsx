@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import NoteList from '../../components/NoteList/NoteList';
 import Pagination from '../../components/Pagination/Pagination';
@@ -25,6 +25,7 @@ const NotesClient = () => {
 	const { data, isLoading, isSuccess, isFetched } = useQuery({
 		queryKey: ['notes', searchQuery, currentPage],
 		queryFn: () => fetchNotes({currentPage: currentPage, searchText: searchQuery }),
+		placeholderData: keepPreviousData,
 		refetchOnMount: false,
 	});
 
